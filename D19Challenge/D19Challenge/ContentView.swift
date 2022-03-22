@@ -11,10 +11,10 @@ struct ContentView: View {
     @State var fromValue = ""
     
     let TIME_UNITS: [TimeUnit] = [
-        TimeUnit("Seconds", 1),
-        TimeUnit("Minutes", 60),
-        TimeUnit("Hours", 60 * 60),
-        TimeUnit("Days", 60 * 60 * 24)
+        TimeUnit("Seconds", 1, id: 0),
+        TimeUnit("Minutes", 60, id: 1),
+        TimeUnit("Hours", 60 * 60, id: 2),
+        TimeUnit("Days", 60 * 60 * 24, id: 3)
     ]
     @State var fromUnitIndex: Int = 0
     @State var toUnitIndex: Int = 0
@@ -29,8 +29,8 @@ struct ContentView: View {
                 Section(header: Text("From")) {
                     TextField("Value", text: $fromValue).keyboardType(.decimalPad)
                     Picker("TimeUnits", selection: $fromUnitIndex) {
-                        ForEach(0 ..< TIME_UNITS.count) { index in
-                            Text("\(TIME_UNITS[index].name)")
+                        ForEach(TIME_UNITS) { timeUnit in
+                            Text("\(timeUnit.name)")
                         }
                     }.pickerStyle(.segmented)
                 }
@@ -38,8 +38,8 @@ struct ContentView: View {
                 Section(header: Text("To")) {
                     Text("\(toValue, specifier: "%.2f")")
                     Picker("TimeUnits", selection: $toUnitIndex) {
-                        ForEach(0 ..< TIME_UNITS.count) { index in
-                            Text("\(TIME_UNITS[index].name)")
+                        ForEach(TIME_UNITS) { timeUnit in
+                            Text("\(timeUnit.name)")
                         }
                     }.pickerStyle(.segmented)
                 }
@@ -49,12 +49,14 @@ struct ContentView: View {
 }
 
 
-struct TimeUnit{
+struct TimeUnit: Identifiable{
     var name: String
     var factor: Double
-    init(_ name: String, _ factor: Double){
+    var id: Int
+    init(_ name: String, _ factor: Double, id: Int){
         self.name = name
         self.factor = factor
+        self.id = id
     }
 }
 
