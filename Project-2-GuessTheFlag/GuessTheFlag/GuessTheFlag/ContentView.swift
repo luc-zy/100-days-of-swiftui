@@ -13,24 +13,44 @@ struct ContentView: View {
 
     @State var correctAnswer = Int.random(in: 0...2)
     
-    @State var scoreTitle = ""
-    @State var showingScore = false
+    @State var alertTitle = ""
+    @State var alertMessage = ""
+    @State var showingAlert = false
+    @State var gameEnd = false
     @State var score = 0
+    @State var round = 1
+    let limit = 3
     
-    func newGame(){
+    func nextRound(){
+        round += 1
         countries.shuffle()
         correctAnswer = Int.random(in: 0...2)
     }
     
     fileprivate func flagTapped(_ number: Int) {
+        computingScore(tappedIndex: number)
+        if round >= limit {
+            gameEnd = true
+            alertTitle = "GG"
+            alertMessage = "Your final score is: \(score)"
+        }else{
+            if(number == correctAnswer) {
+                alertTitle = "Correct"
+                alertMessage = "Congratulation!"
+            }else{
+                alertTitle = "Wrong, that's the flag of \(countries[number])"
+                alertMessage = "The correct answer is No.\(correctAnswer + 1)"
+            }
+        }
+        showingAlert = true
+    }
+    
+    func computingScore(tappedIndex number: Int){
         if(number == correctAnswer) {
-            scoreTitle = "Correct"
             score += 1
         }else{
-            scoreTitle = "Wrong"
             score -= 1
         }
-        showingScore = true
     }
     
     var body: some View {
@@ -49,7 +69,7 @@ struct ContentView: View {
                 VStack(spacing: 15) {
                     VStack {
                         //使用.weight来控制字重
-                        Text("Tap the flag").font(.subheadline.weight(.heavy))
+                        Text("Tap the flag. Round \(round)/\(limit)").font(.subheadline.weight(.heavy))
                         Text(countries[correctAnswer]).font(.largeTitle.weight(.semibold))
                     }
 //                    .foregroundColor(.white)
@@ -64,11 +84,27 @@ struct ContentView: View {
                             //使用clipShape来控制图片形状,使用shadow来控制阴影
                                 .clipShape(Capsule())
                                 .shadow(radius: 5)
-                        }.alert(scoreTitle, isPresented: $showingScore) {
+                        }.alert(alertTitle, isPresented: $showingAlert) {
                             //⚠️alert 放在哪都没关系，只和监听的isPresented有关
-                            Button("OK", role: .cancel, action: newGame)
+                            //TODO: 重构一下发牌和新游戏逻辑
+                            Button(role: .cancel) {
+                                if gameEnd {
+                                    round = 0
+                                    gameEnd = false
+                                    score = 0
+                                    gameEnd = false
+                                }
+                                nextRound()
+                            } label: {
+                                if gameEnd{
+                                    Text("New Game")
+                                }else{
+                                    Text("OK")
+                                }
+                                
+                            }
                         } message: {
-                            Text("Your score is \(score)")
+                            Text(alertMessage)
                         }
 
                     }
@@ -81,7 +117,7 @@ struct ContentView: View {
                 //⚠️多个Spacer会平均分配剩余空间，使用连续两个来控制占位
                 Spacer()
                 Spacer()
-                Text("Score xxx").font(.title.bold()).foregroundColor(.white)
+                Text("Score \(score)").font(.title.bold()).foregroundColor(.white)
                 Spacer()
             }.padding()
         }
