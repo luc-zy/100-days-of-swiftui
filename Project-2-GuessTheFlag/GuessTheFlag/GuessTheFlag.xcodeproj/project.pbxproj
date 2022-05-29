@@ -7,18 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		41B7DC9F283BA26B00781895 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 41B7DC9E283BA26A00781895 /* README.md */; };
+		41B7DCA3283BA32800781895 /* GuessTheFlagGameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B7DCA2283BA32800781895 /* GuessTheFlagGameModel.swift */; };
 		41D5FEEF27EA0C4C00C3A4ED /* GuessTheFlagApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D5FEEE27EA0C4C00C3A4ED /* GuessTheFlagApp.swift */; };
 		41D5FEF127EA0C4C00C3A4ED /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D5FEF027EA0C4C00C3A4ED /* ContentView.swift */; };
 		41D5FEF327EA0C4D00C3A4ED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 41D5FEF227EA0C4D00C3A4ED /* Assets.xcassets */; };
 		41D5FEF627EA0C4D00C3A4ED /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 41D5FEF527EA0C4D00C3A4ED /* Preview Assets.xcassets */; };
+		41FD396E28432C4B00D4E7E3 /* FlagImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FD396D28432C4B00D4E7E3 /* FlagImage.swift */; };
+		41FD397028432D9500D4E7E3 /* ProminentTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FD396F28432D9500D4E7E3 /* ProminentTitle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		41B7DC9E283BA26A00781895 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		41B7DCA2283BA32800781895 /* GuessTheFlagGameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuessTheFlagGameModel.swift; sourceTree = "<group>"; };
 		41D5FEEB27EA0C4C00C3A4ED /* GuessTheFlag.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GuessTheFlag.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		41D5FEEE27EA0C4C00C3A4ED /* GuessTheFlagApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuessTheFlagApp.swift; sourceTree = "<group>"; };
 		41D5FEF027EA0C4C00C3A4ED /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		41D5FEF227EA0C4D00C3A4ED /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		41D5FEF527EA0C4D00C3A4ED /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		41FD396D28432C4B00D4E7E3 /* FlagImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlagImage.swift; sourceTree = "<group>"; };
+		41FD396F28432D9500D4E7E3 /* ProminentTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProminentTitle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,8 +61,12 @@
 			children = (
 				41D5FEEE27EA0C4C00C3A4ED /* GuessTheFlagApp.swift */,
 				41D5FEF027EA0C4C00C3A4ED /* ContentView.swift */,
+				41FD396F28432D9500D4E7E3 /* ProminentTitle.swift */,
 				41D5FEF227EA0C4D00C3A4ED /* Assets.xcassets */,
 				41D5FEF427EA0C4D00C3A4ED /* Preview Content */,
+				41B7DC9E283BA26A00781895 /* README.md */,
+				41B7DCA2283BA32800781895 /* GuessTheFlagGameModel.swift */,
+				41FD396D28432C4B00D4E7E3 /* FlagImage.swift */,
 			);
 			path = GuessTheFlag;
 			sourceTree = "<group>";
@@ -125,6 +137,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				41B7DC9F283BA26B00781895 /* README.md in Resources */,
 				41D5FEF627EA0C4D00C3A4ED /* Preview Assets.xcassets in Resources */,
 				41D5FEF327EA0C4D00C3A4ED /* Assets.xcassets in Resources */,
 			);
@@ -137,8 +150,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				41B7DCA3283BA32800781895 /* GuessTheFlagGameModel.swift in Sources */,
 				41D5FEF127EA0C4C00C3A4ED /* ContentView.swift in Sources */,
 				41D5FEEF27EA0C4C00C3A4ED /* GuessTheFlagApp.swift in Sources */,
+				41FD397028432D9500D4E7E3 /* ProminentTitle.swift in Sources */,
+				41FD396E28432C4B00D4E7E3 /* FlagImage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

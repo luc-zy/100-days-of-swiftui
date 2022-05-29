@@ -79,11 +79,7 @@ struct ContentView: View {
                         Button {
                             flagTapped(number)
                         } label: {
-                            Image(countries[number])
-                                .renderingMode(.original)
-                            //使用clipShape来控制图片形状,使用shadow来控制阴影
-                                .clipShape(Capsule())
-                                .shadow(radius: 5)
+                            FlagImage(countries[number])
                         }.alert(alertTitle, isPresented: $showingAlert) {
                             //⚠️alert 放在哪都没关系，只和监听的isPresented有关
                             //TODO: 重构一下发牌和新游戏逻辑
@@ -117,12 +113,26 @@ struct ContentView: View {
                 //⚠️多个Spacer会平均分配剩余空间，使用连续两个来控制占位
                 Spacer()
                 Spacer()
-                Text("Score \(score)").font(.title.bold()).foregroundColor(.white)
+                Text("Score \(score)").prominentTitle(.white)
                 Spacer()
             }.padding()
         }
     }
 }
+
+
+
+extension View {
+    func prominentTitle(_ color: Color) -> some View{
+        modifier(ProminentTitle(color))
+    }
+}
+
+
+
+
+
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
