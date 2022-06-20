@@ -16,6 +16,8 @@ struct ContentView: View {
     @State var alertTitle = ""
     @State var alertMsg = ""
     @State var showingAlert = false
+
+    @State var score = 0
     
     var body: some View {
         NavigationView{
@@ -34,7 +36,22 @@ struct ContentView: View {
                     }
                 }
             }.navigationTitle(rootWord)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Text("Score: \(score)")
+                    }
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button("New Game", action: newGame)
+                    }
+                }
         }.onAppear (perform: initGameResource)
+    }
+    
+    func newGame() {
+        initGameResource()
+        score = 0
+        usedWords = []
+        inputWord = ""
     }
     
     func initGameResource() {
@@ -62,6 +79,11 @@ struct ContentView: View {
             return
         }
         
+        guard chechSize(inputWord) else {
+            showAlert(title: "Word is not allowed", msg: "Yor can't spell word just equal to \(rootWord), or the word's length is shortten than 3")
+            return
+        }
+        
         guard checkMatch(inputWord) else {
             showAlert(title: "Word not possible", msg: "Yor can't spell that word from \(rootWord)")
             return
@@ -75,6 +97,11 @@ struct ContentView: View {
         
         usedWords.insert(inputWord, at: 0)
         inputWord = ""
+        score += 1
+    }
+    
+    func chechSize(_ word: String) -> Bool {
+        return word != rootWord && word.count >= 3
     }
     
     func checkMatch(_ word: String) -> Bool {
@@ -90,8 +117,11 @@ struct ContentView: View {
     }
     
     func checkReality(_ word: String) -> Bool {
-        //TODO: 完成单词真实性校验
-        return true
+        let checker = UITextChecker()
+            let range = NSRange(location: 0, length: word.utf16.count)
+            let misspelledRange = checker.rangeOfMisspelledWord(in: word, range: range, startingAt: 0, wrap: false, language: "en")
+
+            return misspelledRange.location == NSNotFound
     }
     
     func showAlert(title: String, msg: String) {
