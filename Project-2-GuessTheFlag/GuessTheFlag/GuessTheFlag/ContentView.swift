@@ -21,13 +21,19 @@ struct ContentView: View {
     @State var round = 1
     let limit = 3
     
+    @State var flagDegrees:Double = 0
+    @State var tappedFlagNumber = -1
+    
     func nextRound(){
         round += 1
         countries.shuffle()
         correctAnswer = Int.random(in: 0...2)
+        tappedFlagNumber = -1
     }
     
     fileprivate func flagTapped(_ number: Int) {
+        flagDegrees += 360
+        tappedFlagNumber = number
         computingScore(tappedIndex: number)
         if round >= limit {
             gameEnd = true
@@ -102,6 +108,13 @@ struct ContentView: View {
                         } message: {
                             Text(alertMessage)
                         }
+                        .opacity((tappedFlagNumber == -1 || tappedFlagNumber == number) ? 1 : 0.25)
+                        .animation(.easeIn, value: tappedFlagNumber)
+                        .rotation3DEffect(Angle.degrees(flagDegrees), axis: (x: 0, y: 1, z: 0))
+                        .animation(tappedFlagNumber == number ? .easeIn : nil, value: flagDegrees)
+                        .scaleEffect((tappedFlagNumber == -1 || tappedFlagNumber == number) ? 1 : 0.75, anchor: .center)
+                        .animation(.interpolatingSpring(stiffness: 10, damping: 1).speed(10), value: tappedFlagNumber)
+                        
 
                     }
                 }
