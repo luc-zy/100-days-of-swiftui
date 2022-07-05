@@ -8,11 +8,13 @@
 import SwiftUI
 
 struct ContentView: View {
+    private static let maxQuestionSize = 20
     @State private var upToNumber = 9
     @State private var questionNumber: SelectionNumber = .five
     
     @State private var questions = [MultiplicativeExpressions]()
-    @State private var inputAnswers = [String](repeating: "", count: 20)
+    @State private var inputAnswers = [String](repeating: "", count: maxQuestionSize)
+    @State private var checkResults = [Int](repeating: 0, count: maxQuestionSize)
     
     var body: some View {
         NavigationView {
@@ -31,45 +33,61 @@ struct ContentView: View {
                         HStack{
                             Text("What is \(question.firstNumber) x \(question.secondNumber):")
                             Spacer()
-                            TextField("input number", text: $inputAnswers[1])
+                            TextField("input number", text: $inputAnswers[question.id])
                                 .keyboardType(.numberPad)
-                        }.transition(.asymmetric(insertion: .slide, removal: .scale))
-                    }
+                        }
+                        .foregroundColor(.white)
+                        .colorMultiply(checkResults[question.id] >= 0 ? .primary : .red)
+                        .opacity(checkResults[question.id] >= 0 ? 1 : 0.5)
+                        .rotation3DEffect(Angle.degrees(Double(checkResults[question.id]) * 360.0), axis: (x: 1, y: 0, z: 0))
+                        .animation(.easeIn, value: checkResults[question.id])
+                    }.onDelete(perform: removeQuestion)
                 }
                 Button("Check!", action: check)
             }.navigationTitle("Edutainment !")
         }.onAppear(perform: newGame)
     }
     
+    func removeQuestion(at idx: IndexSet) {
+        questions.remove(atOffsets: idx)
+    }
+    
     func check(){
-        
+        for question in questions {
+            let answer = question.firstNumber * question.secondNumber
+            let inputAnswer = Int(inputAnswers[question.id]) ?? -1
+            if answer == inputAnswer{
+                checkResults[question.id] = 1
+            }else{
+                checkResults[question.id] = -1
+            }
+        }
+        print(checkResults)
     }
     
     func newGame() {
-        //TODO: ⚠️解决List动画不生效的问题！
-        inputAnswers = [String](repeating: "", count: 20)
-        withAnimation(.easeIn) {
-            questions = [MultiplicativeExpressions]()
-            for i in 0..<questionNumber.numberValue{
-                let expresion = MultiplicativeExpressions(
-                    Int.random(in: 1...upToNumber),
-                    Int.random(in: 1...upToNumber)
-//                    id: UUID()
-                )
-                questions.append(expresion)
-            }
+        inputAnswers = [String](repeating: "", count: ContentView.maxQuestionSize)
+        checkResults = [Int](repeating: 0, count: ContentView.maxQuestionSize)
+        questions = [MultiplicativeExpressions]()
+        for i in 0..<questionNumber.numberValue{
+            let expresion = MultiplicativeExpressions(
+                Int.random(in: 1...upToNumber),
+                Int.random(in: 1...upToNumber),
+                id: i
+            )
+            questions.append(expresion)
         }
     }
 }
 
-struct MultiplicativeExpressions: Identifiable {
-    var id = UUID()
+struct MultiplicativeExpressions: Identifiable, Equatable {
+    var id: Int
     var firstNumber: Int
     var secondNumber: Int
-    init(_ firstNumber: Int, _ secondNumber: Int){
+    init(_ firstNumber: Int, _ secondNumber: Int, id: Int){
         self.firstNumber = firstNumber
         self.secondNumber = secondNumber
-//        self.id = id
+        self.id = id
     }
 }
 
