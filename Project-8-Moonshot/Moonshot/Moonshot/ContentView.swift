@@ -8,63 +8,76 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var showMode: ContentViewShowMode = .list
+    
+    let missions: [Mission] = Bundle.main.decode("missions.json")
+    let astronauts: [String: Astronaut] = Bundle.main.decode("astronauts.json")
+    
     var body: some View {
-        GeometryReader{ geo in
-            VStack {
-                Image("Example")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: geo.size.width * 0.85)
-                ScrollView(.vertical) {
-                    LazyVStack(spacing: 10) {
-                        ForEach(0..<100) {
-                            Text("Item \($0)")
-                                .font(.title)
-                        }
-                    }
-                }
-                NavigationView {
-                    VStack{
-                        NavigationLink {
-                            Button("Decode"){
-                                let input = """
-                                    {
-                                        "name": "Taylor Swift",
-                                        "address": {
-                                            "street": "555, Taylor Swift Avenue",
-                                            "city": "Nashville"
-                                        }
-                                    }
-                                """
-                                if let user = try? JSONDecoder().decode(User.self, from: Data(input.utf8)){
-                                    print(user)
-                                }
-                            }
-                        } label: {
-                            Text("Decode")
-                        }
-                        NavigationLink {
-                            ScrollView(.vertical){
-                                LazyVGrid(columns: [GridItem(.adaptive(minimum: 80))]){
-                                    ForEach(0..<1000){item in
-                                        Text("Item \(item)")
-                                    }
-                                }
-                            }
-                        } label: {
-                            Text("GridView")
-                        }
-                        List(0..<100){row in
+        NavigationView {
+            ScrollView(.vertical){
+                if showMode == .grid {
+                    LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))]) {
+                        ForEach(missions) { mission in
                             NavigationLink {
-                                Text("Detail \(row)")
+                                MissionView(misson: mission, astronauts: astronauts)
                             } label: {
-                                Text("Row \(row)")
+                                MissionCardView(mission: mission)
+                            }
+                        }
+                    }.padding([.horizontal, .bottom])
+                } else {
+                    LazyVStack(alignment: .leading) {
+                        ForEach(missions) { mission in
+                            NavigationLink {
+                                MissionView(misson: mission, astronauts: astronauts)
+                            } label: {
+                                HStack {
+                                    Image(mission.imageName)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 50, height: 50)
+                                        .padding(.horizontal)
+                                    VStack {
+                                        Text(mission.displayName)
+                                            .font(.headline)
+                                            .foregroundColor(.white)
+                                        Text(mission.formmattedLaunchDate)
+                                            .font(.caption)
+                                            .foregroundColor(.white.opacity(0.5))
+                                    }
+                                    .frame(maxWidth:.infinity)
+                                    .padding()
+                                    .background(.lightBackground)
+                                }
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                                .overlay {
+                                    RoundedRectangle(cornerRadius: 10)
+                                            .stroke(.lightBackground)
+                                }.padding(.horizontal)
                             }
                         }
                     }
-                    .navigationTitle("SwiftUI")
                 }
-            }.frame(width: geo.size.width, height: geo.size.height)
+            }
+            .background(.darkBackground)
+            .preferredColorScheme(.dark)
+            .navigationTitle("MoonShot")
+            .toolbar {
+                ToolbarItem {
+                    Button {
+                        withAnimation {
+                            if showMode == .grid {
+                                showMode = .list
+                            } else {
+                                showMode = .grid
+                            }
+                        }
+                    } label: {
+                        Text("ToggleViewMode")
+                    }
+                }
+            }
         }
     }
 }
