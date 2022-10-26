@@ -7,6 +7,7 @@
 
 import Foundation
 
-enum ContentViewShowMode{
+enum ContentViewShowMode: String, CaseIterable, Identifiable{
     case list, grid
+    var id: Self {self}
 }

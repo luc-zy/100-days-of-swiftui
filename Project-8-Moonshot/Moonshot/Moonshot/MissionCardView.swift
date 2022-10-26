@@ -8,27 +8,54 @@
 import SwiftUI
 
 struct MissionCardView: View {
+    @State var showMode: ContentViewShowMode = .grid
     let mission: Mission
     var body: some View {
-        VStack{
-            Image(mission.imageName)
-                .resizable()
-                .scaledToFit()
-                .frame(width: 100, height: 100)
-                .padding()
+        
+        let cardLable: some View = VStack{
+            Text(mission.displayName)
+                .font(.headline)
+                .foregroundColor(.white)
+            Text(mission.formmattedLaunchDate)
+                .font(.caption)
+                .foregroundColor(.white.opacity(0.5))
+        }.padding().frame(maxWidth: .infinity).background(.lightBackground)
+        
+        let cardImage: some View = Image(mission.imageName)
+        .resizable()
+        .scaledToFit()
+
+        
+        if showMode == .grid {
             VStack{
-                Text(mission.displayName)
-                    .font(.headline)
-                    .foregroundColor(.white)
-                Text(mission.formmattedLaunchDate)
-                    .font(.caption)
-                    .foregroundColor(.white.opacity(0.5))
-            }
-            .padding(.vertical)
-            .frame(maxWidth: .infinity)
-            .background(.lightBackground)
-        }.clipShape(RoundedRectangle(cornerRadius: 10))
-            .overlay(RoundedRectangle(cornerRadius: 10).stroke(.lightBackground))
+                cardImage
+                    .frame(width: 100, height: 100)
+                    .padding(.vertical)
+                cardLable
+            }.cardify()
+        } else {
+            HStack {
+                cardImage
+                    .frame(width: 50, height: 50)
+                    .padding(.horizontal)
+                cardLable
+            }.cardify()
+        }
+    }
+}
+
+struct Cardify: ViewModifier {
+    let cardShape = RoundedRectangle(cornerRadius: 10)
+    
+    func body(content: Content) -> some View {
+        content.clipShape(cardShape)
+            .overlay(cardShape.stroke(.lightBackground))
+    }
+}
+
+extension View {
+    func cardify() -> some View {
+        self.modifier(Cardify())
     }
 }
 

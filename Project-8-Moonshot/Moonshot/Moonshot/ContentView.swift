@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State var showMode: ContentViewShowMode = .list
+    @State var showMode: ContentViewShowMode = .grid
     
     let missions: [Mission] = Bundle.main.decode("missions.json")
     let astronauts: [String: Astronaut] = Bundle.main.decode("astronauts.json")
@@ -18,46 +18,36 @@ struct ContentView: View {
             ScrollView(.vertical){
                 if showMode == .grid {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))]) {
-                        ForEach(missions) { mission in
+                        ForEach(missions ) { mission in
                             NavigationLink {
                                 MissionView(misson: mission, astronauts: astronauts)
                             } label: {
-                                MissionCardView(mission: mission)
+                                MissionCardView(showMode: showMode, mission: mission)
                             }
                         }
                     }.padding([.horizontal, .bottom])
+                        .transition(.asymmetric(
+                            insertion: .move(edge: .trailing)
+                                .combined(with: .scale).combined(with: .opacity),
+                            removal: .move(edge: .trailing)
+                                .combined(with: .scale).combined(with: .opacity)
+                        ))
                 } else {
                     LazyVStack(alignment: .leading) {
                         ForEach(missions) { mission in
                             NavigationLink {
                                 MissionView(misson: mission, astronauts: astronauts)
                             } label: {
-                                HStack {
-                                    Image(mission.imageName)
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 50, height: 50)
-                                        .padding(.horizontal)
-                                    VStack {
-                                        Text(mission.displayName)
-                                            .font(.headline)
-                                            .foregroundColor(.white)
-                                        Text(mission.formmattedLaunchDate)
-                                            .font(.caption)
-                                            .foregroundColor(.white.opacity(0.5))
-                                    }
-                                    .frame(maxWidth:.infinity)
-                                    .padding()
-                                    .background(.lightBackground)
-                                }
-                                .clipShape(RoundedRectangle(cornerRadius: 10))
-                                .overlay {
-                                    RoundedRectangle(cornerRadius: 10)
-                                            .stroke(.lightBackground)
-                                }.padding(.horizontal)
+                                MissionCardView(showMode: showMode, mission: mission)
                             }
                         }
-                    }
+                    }.padding([.horizontal, .bottom])
+                        .transition(.asymmetric(
+                            insertion: .move(edge: .leading)
+                                .combined(with: .scale).combined(with: .opacity),
+                            removal: .move(edge: .leading)
+                                .combined(with: .scale).combined(with: .opacity)
+                        ))
                 }
             }
             .background(.darkBackground)
@@ -65,16 +55,10 @@ struct ContentView: View {
             .navigationTitle("MoonShot")
             .toolbar {
                 ToolbarItem {
-                    Button {
-                        withAnimation {
-                            if showMode == .grid {
-                                showMode = .list
-                            } else {
-                                showMode = .grid
-                            }
+                    Picker("ToggleShowMode", selection: $showMode.animation(.easeInOut.speed(0.5))) {
+                        ForEach(ContentViewShowMode.allCases) { mode in
+                            Text(mode.rawValue.capitalized)
                         }
-                    } label: {
-                        Text("ToggleViewMode")
                     }
                 }
             }
