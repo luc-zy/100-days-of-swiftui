@@ -14,6 +14,7 @@
 		412278A52A5CD3BC00E1299D /* BookWorm.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 412278A32A5CD3BC00E1299D /* BookWorm.xcdatamodeld */; };
 		412278A72A5CD42700E1299D /* DataContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 412278A62A5CD42700E1299D /* DataContoller.swift */; };
 		41A827CC2A7699010062B978 /* AddBookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41A827CB2A7699010062B978 /* AddBookView.swift */; };
+		41C568512A9D6B1200E83348 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41C568502A9D6B1200E83348 /* RatingView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,7 @@
 		412278A42A5CD3BC00E1299D /* BookWorm.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BookWorm.xcdatamodel; sourceTree = "<group>"; };
 		412278A62A5CD42700E1299D /* DataContoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataContoller.swift; sourceTree = "<group>"; };
 		41A827CB2A7699010062B978 /* AddBookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBookView.swift; sourceTree = "<group>"; };
+		41C568502A9D6B1200E83348 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +66,7 @@
 				412278A32A5CD3BC00E1299D /* BookWorm.xcdatamodeld */,
 				412278A62A5CD42700E1299D /* DataContoller.swift */,
 				41A827CB2A7699010062B978 /* AddBookView.swift */,
+				41C568502A9D6B1200E83348 /* RatingView.swift */,
 			);
 			path = BookWorm;
 			sourceTree = "<group>";
@@ -149,6 +152,7 @@
 				412278A52A5CD3BC00E1299D /* BookWorm.xcdatamodeld in Sources */,
 				412278982A5CCBF000E1299D /* ContentView.swift in Sources */,
 				412278A72A5CD42700E1299D /* DataContoller.swift in Sources */,
+				41C568512A9D6B1200E83348 /* RatingView.swift in Sources */,
 				412278962A5CCBF000E1299D /* BookWormApp.swift in Sources */,
 				41A827CC2A7699010062B978 /* AddBookView.swift in Sources */,
 			);
