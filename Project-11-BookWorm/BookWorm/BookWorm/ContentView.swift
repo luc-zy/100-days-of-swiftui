@@ -18,7 +18,7 @@ struct ContentView: View {
             List {
                 ForEach(books) { book in
                     NavigationLink {
-                        Text(book.title ?? "Unknown Title")
+                        DetailView(book: book)
                     } label: {
                         HStack {
                             EmojyRatingView(rating: book.rating)
@@ -34,9 +34,7 @@ struct ContentView: View {
                     }
 
                 }
-            }
-            Text("Count: \(books.count)")
-                .navigationTitle("Bookworm")
+            }.navigationTitle("Bookworm")
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button {
