@@ -8,15 +8,15 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State var amount = ""
-    @State var numberOfPeople = 2
-    @State var tipPercentageIndex = 2
-    @State var number = ""
-//    @FocusState var amountIsFocused: Bool
     let tipPercentages = [5, 10, 20, 30, 0]
+    
+    @State var amount: Double = 0
+    @State var numberOfPeople = 0
+    @State var tipPercent = 0
+    @FocusState var inputFocused: Bool
+    
     var totalAmount: Double{
-        let realAmount = Double(amount) ?? 0
-        return (realAmount * (1 + Double(tipPercentages[tipPercentageIndex]) / 100))
+        return (amount * (1 + Double(tipPercent) / 100))
     }
     
     var totalPerPerson: Double{
@@ -25,37 +25,50 @@ struct ContentView: View {
     
     
     var body: some View {
-        NavigationView{
+        NavigationStack{
             Form{
                 Section{
-                    TextField("Amount", text: $amount)
+                    TextField("Amount", value: $amount, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
                         .keyboardType(.decimalPad)
+                        .focused($inputFocused)
                     Picker("Number of people", selection: $numberOfPeople) {
                         ForEach(2 ..< 99) {
                             Text("\($0) people")
                         }
                     }
-                    TextField("Number of people", text: $number)
-                        .keyboardType(.numberPad)
                 }
                 
                 //为section添加header比直接添加Text要好
-                Section(header: Text("How much tip do you want to leave? - %")) {
-                    Picker("Tip percentage", selection: $tipPercentageIndex) {
-                        ForEach(0 ..< tipPercentages.count) { index in
-                            Text("\(self.tipPercentages[index])")
+                Section("How much tip do you want to leave?") {
+                    Picker("Tip percent", selection: $tipPercent){
+                        ForEach(0..<101){
+                            Text($0, format: .percent)
                         }
-                    }.pickerStyle(SegmentedPickerStyle())  //较短的Picker可以考虑使用SegmentPickerStyle来获得更好的显示效果
+                    }.pickerStyle(.wheel)
+//                    Picker("Tip percent", selection: $tipPercent) {
+//                        ForEach(tipPercentages, id: \.self) {
+//                            Text($0, format: .percent)
+//                        }
+//                    }.pickerStyle(.segmented)  //较短的Picker可以考虑使用SegmentPickerStyle来获得更好的显示效果
                 }
                 
-                Section(header: Text("Amount per person")){
-                    Text("$\(totalPerPerson, specifier: "%.2f")")
+                Section("Amount per person"){
+                    //                    Text("$\(totalPerPerson, specifier: "%.2f")")
+                    Text(totalPerPerson, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
                 }
-                Section(header: Text("Total Amount")) {
-                    Text("$\(totalAmount, specifier: "%.2f")")
-                        .foregroundColor(tipPercentageIndex == 4 ? .red : .blue)
+                Section("Total Amount") {
+                    //                    Text("$\(totalAmount, specifier: "%.2f")").foregroundColor(tipPercent == 0 ? .red : .blue)
+                    Text(totalAmount, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))
+                        .foregroundStyle(tipPercent == 0 ? .red : .blue)
                 }
-            }.navigationBarTitle("WeSplit")
+            }.navigationTitle("WeSplit")
+                .toolbar(content: {
+                    if inputFocused {
+                        Button("Done"){
+                            inputFocused = false
+                        }
+                    }
+                })
         }
     }
 }
