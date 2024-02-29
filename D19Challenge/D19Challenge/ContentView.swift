@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State var fromValue = ""
+    @State var fromValue: Double = 0
     
     let TIME_UNITS: [TimeUnit] = [
         TimeUnit("Seconds", 1, id: 0),
@@ -19,15 +19,19 @@ struct ContentView: View {
     @State var fromUnitIndex: Int = 0
     @State var toUnitIndex: Int = 0
     
+    @FocusState var focused: Bool
+    
     var toValue: Double{
-        ((Double(fromValue) ?? 0) * TIME_UNITS[fromUnitIndex].factor) / TIME_UNITS[toUnitIndex].factor
+        fromValue * TIME_UNITS[fromUnitIndex].factor / TIME_UNITS[toUnitIndex].factor
     }
     
     var body: some View {
         NavigationView{
             Form{
                 Section(header: Text("From")) {
-                    TextField("Value", text: $fromValue).keyboardType(.decimalPad)
+                    TextField("Value", value: $fromValue, format: .number)
+                        .keyboardType(.decimalPad)
+                        .focused($focused)
                     Picker("TimeUnits", selection: $fromUnitIndex) {
                         ForEach(TIME_UNITS) { timeUnit in
                             Text("\(timeUnit.name)")
@@ -36,7 +40,7 @@ struct ContentView: View {
                 }
                 
                 Section(header: Text("To")) {
-                    Text("\(toValue, specifier: "%.2f")")
+                    Text(toValue.formatted())
                     Picker("TimeUnits", selection: $toUnitIndex) {
                         ForEach(TIME_UNITS) { timeUnit in
                             Text("\(timeUnit.name)")
@@ -44,6 +48,16 @@ struct ContentView: View {
                     }.pickerStyle(.segmented)
                 }
             }.navigationTitle(Text("Time Conversion"))
+                .toolbar(content: {
+                    if focused {
+                        Button {
+                            focused = false
+                        } label: {
+                            Text("Done")
+                        }
+
+                    }
+                })
         }
     }
 }
