@@ -12,11 +12,11 @@ import SwiftUI
 class PersonStore{
     static let shared = PersonStore()
     
-    var people: [Person]?
+    var people: [PersonDto]?
     var path: NavigationPath = NavigationPath()
     
     func clearData() {
-        self.people = nil
+        self.people?.removeAll()
     }
     
     func loadData() async {
@@ -31,7 +31,8 @@ class PersonStore{
             print("data downloaded from url")
             let decoder: JSONDecoder = JSONDecoder()
             decoder.dateDecodingStrategy = .iso8601
-            people = try decoder.decode([Person].self, from: data)
+            people = try decoder.decode([PersonDto].self, from: data)
+            
         }catch{
             print("Error to fetch data, \(String(describing: error))")
         }

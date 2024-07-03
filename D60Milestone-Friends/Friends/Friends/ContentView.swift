@@ -47,13 +47,15 @@ struct ContentView: View {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                             deleteButtonTilt = false
                         }
-                        store.clearData()
+                        withAnimation {
+                            store.clearData()
+                        }
                     } label: {
                         Image(systemName: "trash")
                             .foregroundStyle(.red)
                             .rotationEffect(.degrees(deleteButtonTilt ? -15 : 0), anchor: .bottom)
                             .animation(.spring(duration: 0.8), value: deleteButtonTilt)
-                    }
+                    }.sensoryFeedback(.warning, trigger: deleteButtonTilt)
 
                 }
                 ToolbarItem(placement: .topBarTrailing) {

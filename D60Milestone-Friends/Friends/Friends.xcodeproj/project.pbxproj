@@ -11,8 +11,8 @@
 		413E2B952C2BAF4C00A3DDC7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413E2B942C2BAF4C00A3DDC7 /* ContentView.swift */; };
 		413E2B972C2BAF4D00A3DDC7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 413E2B962C2BAF4D00A3DDC7 /* Assets.xcassets */; };
 		413E2B9A2C2BAF4D00A3DDC7 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 413E2B992C2BAF4D00A3DDC7 /* Preview Assets.xcassets */; };
-		413E2BA12C2BB16F00A3DDC7 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413E2BA02C2BB16F00A3DDC7 /* Person.swift */; };
-		413E2BA32C2BB18D00A3DDC7 /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413E2BA22C2BB18D00A3DDC7 /* Friend.swift */; };
+		413E2BA12C2BB16F00A3DDC7 /* PersonDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413E2BA02C2BB16F00A3DDC7 /* PersonDto.swift */; };
+		413E2BA32C2BB18D00A3DDC7 /* FriendDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413E2BA22C2BB18D00A3DDC7 /* FriendDto.swift */; };
 		413E2BA72C2BB6E000A3DDC7 /* PersonStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413E2BA62C2BB6E000A3DDC7 /* PersonStore.swift */; };
 		4170AD172C32967100444716 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4170AD162C32967100444716 /* DetailView.swift */; };
 /* End PBXBuildFile section */
@@ -23,8 +23,8 @@
 		413E2B942C2BAF4C00A3DDC7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		413E2B962C2BAF4D00A3DDC7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		413E2B992C2BAF4D00A3DDC7 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		413E2BA02C2BB16F00A3DDC7 /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
-		413E2BA22C2BB18D00A3DDC7 /* Friend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
+		413E2BA02C2BB16F00A3DDC7 /* PersonDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonDto.swift; sourceTree = "<group>"; };
+		413E2BA22C2BB18D00A3DDC7 /* FriendDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendDto.swift; sourceTree = "<group>"; };
 		413E2BA62C2BB6E000A3DDC7 /* PersonStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonStore.swift; sourceTree = "<group>"; };
 		4170AD162C32967100444716 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -59,7 +59,7 @@
 		413E2B912C2BAF4C00A3DDC7 /* Friends */ = {
 			isa = PBXGroup;
 			children = (
-				413E2BA42C2BB1DB00A3DDC7 /* models */,
+				413E2BA42C2BB1DB00A3DDC7 /* dto */,
 				413E2B922C2BAF4C00A3DDC7 /* FriendsApp.swift */,
 				413E2B942C2BAF4C00A3DDC7 /* ContentView.swift */,
 				413E2B962C2BAF4D00A3DDC7 /* Assets.xcassets */,
@@ -78,13 +78,13 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		413E2BA42C2BB1DB00A3DDC7 /* models */ = {
+		413E2BA42C2BB1DB00A3DDC7 /* dto */ = {
 			isa = PBXGroup;
 			children = (
-				413E2BA02C2BB16F00A3DDC7 /* Person.swift */,
-				413E2BA22C2BB18D00A3DDC7 /* Friend.swift */,
+				413E2BA02C2BB16F00A3DDC7 /* PersonDto.swift */,
+				413E2BA22C2BB18D00A3DDC7 /* FriendDto.swift */,
 			);
-			path = models;
+			path = dto;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -157,11 +157,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				413E2BA12C2BB16F00A3DDC7 /* Person.swift in Sources */,
+				413E2BA12C2BB16F00A3DDC7 /* PersonDto.swift in Sources */,
 				4170AD172C32967100444716 /* DetailView.swift in Sources */,
 				413E2B952C2BAF4C00A3DDC7 /* ContentView.swift in Sources */,
 				413E2B932C2BAF4C00A3DDC7 /* FriendsApp.swift in Sources */,
-				413E2BA32C2BB18D00A3DDC7 /* Friend.swift in Sources */,
+				413E2BA32C2BB18D00A3DDC7 /* FriendDto.swift in Sources */,
 				413E2BA72C2BB6E000A3DDC7 /* PersonStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
